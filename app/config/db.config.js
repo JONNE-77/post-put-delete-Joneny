@@ -1,6 +1,8 @@
+// Database Configuration
+
 module.exports = {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: "7777",
-    DB: "testnodejs"
+    HOST: "localhost",           // MySQL server location
+    USER: "root",               // MySQL username
+    PASSWORD: "7777",           // MySQL password
+    DB: "testnodejs"            // Database name ທີ່ໃຊ້
 };

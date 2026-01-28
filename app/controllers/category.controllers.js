@@ -1,6 +1,7 @@
-const Category = require("../models/category.model");
+const Category = require("../models/category.model.js");
 
-exports.findAll = (req, res) => {
+// GET /categories - ສະແດງທຸກປະເພດ, ຫມວດຫມູ່
+exports.findAll = (req, res) => {  
   Category.getAll((err, data) => {
     if (err)
       res.status(500).send({
@@ -12,7 +13,9 @@ exports.findAll = (req, res) => {
   });
 };
 
+// POST /categories - ສ້າງໃໝ່
 exports.create = (req, res) => {
+  // ກວດສອບ required field
   if (!req.body.cat_name) {
     res.status(400).send({
       message: "Category name cannot be empty!"
@@ -36,7 +39,9 @@ exports.create = (req, res) => {
   });
 };
 
+// PUT /categories/:id - ອັບເດດ
 exports.update = (req, res) => {
+  // ກວດສອບ required field
   if (!req.body.cat_name) {
     res.status(400).send({
       message: "Category name cannot be empty!"
@@ -65,6 +70,7 @@ exports.update = (req, res) => {
   });
 };
 
+// DELETE /categories/:id - ລົບ
 exports.delete = (req, res) => {
   Category.remove(req.params.id, (err, data) => {
     if (err) {

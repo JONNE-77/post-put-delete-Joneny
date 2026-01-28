@@ -1,15 +1,22 @@
 module.exports = app => {
-  const products = require("../controllers/product.controller");
+  const products = require("../controllers/product.controllers.js");
+  const auth = require("../routes/authen.routes.js");
 
-  app.get("/products", products.findAll);
+  // GET - ສະແດງທຸກສິນຄ້າ
+  app.get("/products", auth, products.findAll);
 
-  app.post("/products", products.create);
+  // POST - ສ້າງສິນຄ້າໃໝ່
+  app.post("/products", auth, products.create);
 
-  app.get("/products/:id", products.findOne);
+  // GET - ສະແດງສິນຄ້າ ID ໂດຍລະບຸ ID
+  app.get("/products/:id", auth, products.findOne);
 
-  app.put("/products/:id", products.update);
+  // PUT - ອັບເດດສິນຄ້າ
+  app.put("/products/:id", auth, products.update);
 
-  app.delete("/products/:id", products.delete);
+  // DELETE - ລົບສິນຄ້າໂດຍລະບຸ ID
+  app.delete("/products/:id", auth, products.delete);
 
-  app.delete("/products", products.deleteAll);
+  // DELETE - ລົບທຸກສິນຄ້າ
+  app.delete("/products", auth, products.deleteAll);
 };

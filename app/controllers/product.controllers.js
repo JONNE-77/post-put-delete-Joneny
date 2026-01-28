@@ -1,5 +1,7 @@
-const Product = require("../models/product.model");
 
+const Product = require("../models/product.model.js");
+
+// GET /products - ສະແດງທຸກສິນຄ້າ
 exports.findAll = (req, res) => {
   Product.getAll((err, data) => {
     if (err)
@@ -12,6 +14,7 @@ exports.findAll = (req, res) => {
   });
 };
 
+// GET /products/:id - ສະແດງສິນຄ້າ ID ໂດຍລະບຸ ID
 exports.findOne = (req, res) => {
   Product.findById(req.params.id, (err, data) => {
     if (err) {
@@ -29,7 +32,9 @@ exports.findOne = (req, res) => {
   });
 };
 
+// POST /products - ສ້າງສິນຄ້າໃໝ່
 exports.create = (req, res) => {
+  // ກວດສອບ required fields
   if (!req.body.name || !req.body.price || !req.body.cat_id) {
     res.status(400).send({
       message: "Product name, price, and category ID are required!"
@@ -54,7 +59,9 @@ exports.create = (req, res) => {
   });
 };
 
+// PUT /products/:id - ອັບເດດສິນຄ້າ
 exports.update = (req, res) => {
+  // ກວດສອບ required fields
   if (!req.body.name || !req.body.price || !req.body.cat_id) {
     res.status(400).send({
       message: "Product name, price, and category ID are required!"
@@ -84,6 +91,7 @@ exports.update = (req, res) => {
   });
 };
 
+// DELETE /products/:id - ລົບສິນຄ້າ
 exports.delete = (req, res) => {
   Product.remove(req.params.id, (err, data) => {
     if (err) {
@@ -101,6 +109,7 @@ exports.delete = (req, res) => {
   });
 };
 
+// DELETE /products - ລົບທຸກສິນຄ້າ
 exports.deleteAll = (req, res) => {
   Product.removeAll((err, data) => {
     if (err)

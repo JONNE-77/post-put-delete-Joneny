@@ -1,34 +1,39 @@
 const sql = require("./db");
 
+// Product Constructor - ສ້າງ product object
 const Product = function (product) {
-  this.name = product.name;
-  this.price = product.price;
-  this.cat_id = product.cat_id;
+  this.name = product.name;        // ຊື່ສິນຄ້າ
+  this.price = product.price;      // ລາຄາ
+  this.cat_id = product.cat_id;    // ໂອວະລາຍ ID
 };
 
+// ສະແດງສິນຄ້າທັງໝົດ
 Product.getAll = (callback) => {
   sql.query(
     "SELECT * FROM products",
-    callback
+    callback  
   );
 };
 
+// ສ້າງສິນຄ້າໃໝ່
 Product.create = (newProduct, callback) => {
   sql.query(
     "INSERT INTO products (name, price, cat_id) VALUES (?, ?, ?)",
-    [newProduct.name, newProduct.price, newProduct.cat_id],
+    [newProduct.name, newProduct.price, newProduct.cat_id],  // ແທນ ? ດ້ວຍຄ່າ
     callback
   );
 };
 
+// ຊອກຫາສິນຄ້າ ID ໂດຍລະບຸ ID
 Product.findById = (id, callback) => {
   sql.query(
     "SELECT * FROM products WHERE id = ?",
-    id,
+    id,  // SQL injection ປ້ອງກັນ
     callback
   );
 };
 
+// ອັບເດດສິນຄ້າ
 Product.updateById = (id, product, callback) => {
   sql.query(
     "UPDATE products SET name = ?, price = ?, cat_id = ? WHERE id = ?",
@@ -39,6 +44,7 @@ Product.updateById = (id, product, callback) => {
         return;
       }
 
+      // ກວດສອບວ່າມີສິນຄ້າ ID ຖືກ update ຫຼືບໍ່
       if (res.affectedRows == 0) {
         callback({ kind: "not_found" }, null);
         return;
@@ -49,6 +55,7 @@ Product.updateById = (id, product, callback) => {
   );
 };
 
+// ລົບສິນຄ້າ ID ໂດຍລະບຸ ID
 Product.remove = (id, callback) => {
   sql.query(
     "DELETE FROM products WHERE id = ?",
@@ -59,6 +66,7 @@ Product.remove = (id, callback) => {
         return;
       }
 
+      // ກວດສອບວ່າມີສິນຄ້າ ID ຖືກລົບຫຼືບໍ່
       if (res.affectedRows == 0) {
         callback({ kind: "not_found" }, null);
         return;
@@ -69,6 +77,7 @@ Product.remove = (id, callback) => {
   );
 };
 
+// ລົບທຸກສິນຄ້າ
 Product.removeAll = (callback) => {
   sql.query(
     "DELETE FROM products",
@@ -76,4 +85,5 @@ Product.removeAll = (callback) => {
   );
 };
 
+// ສົ່ງອອກ Product ໃຫ້ controllers
 module.exports = Product;
